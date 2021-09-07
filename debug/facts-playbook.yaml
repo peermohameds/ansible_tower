@@ -1,0 +1,16 @@
+---
+- name: playbook to play with facts
+  hosts: localhost
+  tasks:
+    - name: display DNS and IPs
+      debug:
+        msg:  |
+            Machine ip is {{ ansible_facts.default_ipv4['address'] }}
+            DNS name is {{ ansible_facts['fqdn'] }}
+            machine ips {{ ansible_default_ipv4 }}
+
+    - name: display DNS and IPs
+      debug:
+        msg:  |
+          {{ ansible_facts['dns'] }}
+...

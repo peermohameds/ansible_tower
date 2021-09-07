@@ -1,0 +1,8 @@
+---
+- name: custom playbook
+  hosts: web
+  tasks:
+    - name: custom facts
+      debug:
+        msg: "server type {{ ansible_facts.ansible_local['custom']['server_fact']['servertype'] | upper }} "
+...

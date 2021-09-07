@@ -1,0 +1,15 @@
+---
+- name: play to check register directive
+  hosts: centos1
+  gather_facts: true
+  tasks:
+    - name: create a file
+      copy:
+        content: "This file created in {{ ansible_hostname }} on {{ ansible_date_time['date'] }} {{ ansible_date_time['time']}}"
+        dest: /tmp/peer.txt
+      register: file_result
+    - name: display result
+      debug:
+        var: file_result
+...
+

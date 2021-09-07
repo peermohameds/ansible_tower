@@ -1,0 +1,21 @@
+---
+- name: display multi line using yaml
+  hosts: localhost
+  gather_facts: false
+  vars:
+    message: >
+              hello! this is a multi line message
+              expanding to two lines.
+              not really, it is 3 lines.
+    folded_message: |
+              hello! this is a multi line message
+              expanding to two lines.
+              not really, it is 3 lines.
+  tasks:
+    - name: display message
+      debug:
+        var: message
+    - name: display folded_message
+      debug:
+        var: folded_message
+...

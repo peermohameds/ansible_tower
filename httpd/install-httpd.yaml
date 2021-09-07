@@ -1,0 +1,44 @@
+---
+- name: httpd install 
+  hosts: web
+  tasks:
+    - name: install epel-release
+      package:
+        name: epel-release
+        state: latest
+    - name: install httpd
+      package: 
+        name: httpd
+        state: latest
+    - name: install firewalld
+      package: 
+        name: firewalld
+        state: latest
+    - name: copy content
+      copy:
+        content: "<h4>Welcome to My Site page from <h3> {{ ansible_hostname }} </h3> server </h4>"
+        dest: /var/www/html/index.html 
+    - name: restart firewalld
+      service:
+        name: firewalld
+        enabled: true
+        state: started
+    - name: add firewall ports
+      firewalld:
+        service: http
+        permanent: true
+        immediate: yes
+        state: enabled
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted
+    - name: Web pages showing status code 200
+      uri:
+        url: "http://{{ ansible_hostname }}"
+        status_code: 200
+    - name: Web pages showing status code 200 for port 443
+      uri:
+        url: "https://{{ ansible_hostname }}"
+        status_code: 200
+...

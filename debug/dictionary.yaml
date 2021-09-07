@@ -1,0 +1,11 @@
+---
+- name: display dictionary
+  hosts: localhost
+  gather_facts: true
+  tasks: # dictionaries of tasks in block format
+    - { name: display the hostname , debug: { msg: "{{ ansible_hostname }}" }} 
+    - { name: display the date , debug: { msg: "{{ ansible_date_time.date }}" }} 
+    - { name: "display IP address . notaion"  , debug: { msg: "{{ ansible_default_ipv4.address }}" }} 
+    - { name: "display the IP address [] notation ", debug: { msg: "{{ ansible_default_ipv4['address'] }}" }} 
+    
+...

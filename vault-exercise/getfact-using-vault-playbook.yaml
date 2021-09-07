@@ -1,0 +1,9 @@
+- name: display the content of encrypted file using ansible vault
+  hosts: localhost
+  vars_files:
+    - secret.yaml
+  tasks:
+    - name: display content
+      debug:
+        msg: "password is {{ password }} "
+   

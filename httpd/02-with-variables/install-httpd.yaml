@@ -1,0 +1,45 @@
+---
+- name: httpd install 
+  hosts: web
+  vars:
+    epel: epel-release
+    application_state: latest
+  vars_files:
+    - vars/varfile.yaml
+  tasks:
+    - name: "install {{ epel }}"
+      package:
+        name: "{{ epel }}"
+        state: "{{ application_state }}"
+    - name: "install {{ web_pkg }}"
+      package: 
+        name: "{{ web_pkg }}"
+        state: "{{ application_state }}"
+    - name: "install {{ firewall_pkg }}"
+      package: 
+        name: "{{ firewall_pkg }}"
+        state: latest
+    - name: copy content
+      copy:
+        content: "<h4>Welcome to My Site page from <h3> {{ ansible_hostname }} </h3> server </h4>"
+        dest: /var/www/html/index.html 
+    - name: "start {{ firewall_service }}"
+      service:
+        name: "{{ firewall_service }}"
+        enabled: true
+        state: started
+    - name: "add firewall ports {{ rule }}"
+      firewalld:
+        service: "{{ rule }}"
+        permanent: true
+        immediate: yes
+        state: enabled
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted
+    - name: Web pages showing status code 200
+      uri:
+        url: "http://{{ ansible_hostname }}"
+        status_code: 200
+...

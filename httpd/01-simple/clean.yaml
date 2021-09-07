@@ -1,0 +1,8 @@
+---
+- name: clean evironment
+  hosts: web
+  tasks:
+    - name: remove httpd and epel-release
+      package: 
+        name: [ "httpd", "firewalld", "epel-release" ]
+        state: absent

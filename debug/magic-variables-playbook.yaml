@@ -1,0 +1,18 @@
+---
+- name: display magic variables
+  hosts: centos1
+  gather_facts: false
+  tasks:
+    - name: magic variable hostvars
+      debug:
+        var: hostvars
+    - name: magic variable group_name
+      debug:
+        var: group_names
+    - name: magic variable groups
+      debug:
+        var: groups
+    - name: magic variable inventory_hostname
+      debug:
+        var: inventory_hostname
+...

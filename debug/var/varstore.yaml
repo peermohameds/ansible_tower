@@ -1,0 +1,9 @@
+---
+applications:
+  - httpd
+  - mysql
+services: [ "httpd","mysql"]
+firewall_ports: [ 80, 443 , 3306 ]
+firewall_zone: public
+firewall_immediate: yes
+...

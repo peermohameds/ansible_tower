@@ -1,0 +1,29 @@
+---
+- name: variable example
+  hosts: localhost
+  vars:
+    names: [ "peer", "mohamed"]
+    age: 42
+    work: { designation: Lead Analyst, company: Bank of America }
+  vars_files:
+    - var/varstore.yaml
+  tasks:
+    - name: display name
+      debug:  
+        msg: "Full Name: {{ names[0] }} {{ names.1 }}"
+    - name: age
+      debug:
+        var: age
+    - name: display work
+      debug:
+        msg: " Working as {{ work.designation }} in {{ work['company'] }}"
+    - name: display variables from file
+      debug:
+        var: firewall_ports
+    - name: display variables from file
+      debug:
+        var: applications
+    - name: display variables from file firewallzone
+      debug:
+        var: firewall_zone
+...

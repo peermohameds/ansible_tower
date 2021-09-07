@@ -1,0 +1,4 @@
+[server_fact]
+servertype = factapp_rhel_8
+plaform = mainfact
+datacenter = chn01

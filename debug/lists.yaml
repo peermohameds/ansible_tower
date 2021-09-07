@@ -1,0 +1,19 @@
+---
+- name: ansible lists example
+  hosts: localhost
+  gather_facts: true
+  vars:
+    apps: 
+      - epel-release
+      - httpd
+      - openssh-server
+    services: [ 'httpd','mysqld','sshd']
+  tasks:
+    - name: display apps
+      debug: var=apps  # displayed in Obsolete key=value playbook shorthand method
+    - { name: display services, debug: { var: services }}  
+    # displaying list in . notation
+    - { name: display second element of apps and services, debug: { msg: "{{ apps.1 }} {{ services.1 }}" }}
+    # displaying list in [] notation
+    - { name: "display second element of apps and service [] method", debug: { msg: "{{ apps[1]}} {{ services[1] }}" } }
+...

@@ -1,0 +1,15 @@
+---
+- name: using register directive
+  hosts: localhost
+  tasks:
+    - name: process loop
+      shell: "echo Distribution is {{ item }}" 
+      loop:
+        - Ubuntu
+        - CentOS
+      register: results
+    - name: display results
+      debug:
+        var: item.stdout 
+      loop: results['results']
+...

@@ -1,0 +1,35 @@
+---
+- name: delete host enties of centos1,2,3,deploy01
+  hosts: lab
+  gather_facts: yes
+  tasks:
+    - name: deleting comment in host file
+      lineinfile:
+        path: /etc/hosts
+        line: '# udpated by admin using ANSIBLE '
+        state: absent
+    - name: deleting comment in host file
+      lineinfile:
+        path: /etc/hosts
+        line: '# # {mark} ANSIBLE MANAGED BLOCK'
+        state: absent
+    - name: update host file
+      lineinfile:
+        path: /etc/hosts
+        line: "{{ item.ip }} {{ item.fqdn }} {{ item.name }}"
+        state: absent
+      loop:
+        - { ip: 192.168.3.3, fqdn: deploy01.localdomain, name: deploy01 }
+        - { ip: 192.168.3.21, fqdn: centos1.localdomain, name: centos1 }
+        - { ip: 192.168.3.22, fqdn: centos2.localdomain, name: centos2 }
+        - { ip: 192.168.3.23, fqdn: centos3.localdomain, name: centos3 }
+    - name: delete last line
+      lineinfile: 
+        path: /etc/hosts
+        line: "# end==="
+        state: absent
+    - name: delete last line
+      lineinfile: 
+        path: /etc/hosts
+        regex: '(^\s*$)'
+        state: absent

@@ -1,0 +1,24 @@
+---
+- name: playbook to update the host file with client info
+  hosts: lab
+  gather_facts: false
+  tasks:
+    - name: update the host file
+      lineinfile:
+        path: /etc/hosts
+        line: "# udpated by admin using ANSIBLE \n" 
+        state: present
+    - name: update host file
+      blockinfile:
+        path: /etc/hosts
+        marker_begin: "# {}"
+        block: |
+          {{ item.ip }} {{ item.fqdn }} {{ item.name }}
+        marker_end: "# {mark}"
+      loop:
+        - { ip: 192.168.3.3, fqdn: deploy01.localdomain, name: deploy01 }
+        - { ip: 192.168.3.21, fqdn: centos1.localdomain, name: centos1 }
+        - { ip: 192.168.3.22, fqdn: centos2.localdomain, name: centos2 }
+        - { ip: 192.168.3.23, fqdn: centos3.localdomain, name: centos3 }
+...
+

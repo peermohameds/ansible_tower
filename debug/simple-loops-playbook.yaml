@@ -1,0 +1,30 @@
+---
+- name: simple loops
+  hosts: localhost
+  vars:
+    services:
+      - httpd
+      - mysql
+      - firewalld
+      - sshd
+  tasks:
+    - name: display loop items
+      debug:
+        var: item
+      loop: "{{ services }}"
+    - name: display loop items
+      debug:
+        var: item
+      loop:
+        - CentOS
+        - Ubuntu
+        - Arch-Linux
+    - name: display dictionary
+      debug:
+        var: item['user']
+      loop: 
+        - user: john
+          permission: 600
+        - user: jane
+          permission: 755
+...
